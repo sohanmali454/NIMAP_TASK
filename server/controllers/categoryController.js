@@ -1,4 +1,6 @@
 import Category from "../models/categoryModel.js";
+
+//CREATE CATEGORY
 export const createCategory = async (req, res) => {
   try {
     const { categoryName } = req.body;
@@ -17,6 +19,7 @@ export const createCategory = async (req, res) => {
   }
 };
 
+//GET ALL CATEGORY
 export const getCategories = async (req, res) => {
   try {
     const categories = await Category.findAll();
@@ -29,6 +32,7 @@ export const getCategories = async (req, res) => {
   }
 };
 
+//UPDATE CATEGORY
 export const updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
@@ -54,6 +58,7 @@ export const updateCategory = async (req, res) => {
   }
 };
 
+//DELETE CATEGORY
 export const deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
@@ -73,6 +78,7 @@ export const deleteCategory = async (req, res) => {
   }
 };
 
+//GET CATEGORY WITH PAFINATION
 export const getCategoriesWithPagination = async (req, res) => {
   try {
     let { page = 1, pageSize = 10 } = req.query;

@@ -1,6 +1,7 @@
 import Category from "../models/categoryModel.js";
 import Product from "../models/productModel.js";
 
+//CREATE   PRODUCT
 export const createProduct = async (req, res) => {
   try {
     const { productName, categoryId } = req.body;
@@ -18,6 +19,7 @@ export const createProduct = async (req, res) => {
   }
 };
 
+//GET ALL PRODUCTS
 export const getProducts = async (req, res) => {
   try {
     const products = await Product.findAll({
@@ -34,6 +36,7 @@ export const getProducts = async (req, res) => {
   }
 };
 
+//UPDATE PRODUCTS
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -60,6 +63,7 @@ export const updateProduct = async (req, res) => {
   }
 };
 
+//DELETE PRODUCTS
 export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -76,6 +80,7 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
+//GET PRODUCTS WITH PAGINATION
 export const getProductsWithPagination = async (req, res) => {
   try {
     const { page = 1, pageSize = 10 } = req.query;
