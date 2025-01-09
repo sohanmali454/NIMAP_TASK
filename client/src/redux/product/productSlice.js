@@ -9,7 +9,8 @@ export const fetchProducts = createAsyncThunk(
     if (!response.ok) {
       throw new Error("Failed to fetch products");
     }
-    return await response.json();
+    const data = await response.json();
+    return data.data; 
   }
 );
 
@@ -64,7 +65,7 @@ const productSlice = createSlice({
   name: "products",
   initialState: {
     products: [],
-    status: "idle", 
+    status: "idle",
     error: null,
   },
   reducers: {},

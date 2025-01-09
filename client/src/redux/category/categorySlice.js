@@ -9,9 +9,11 @@ export const fetchCategories = createAsyncThunk(
     if (!response.ok) {
       throw new Error("Failed to fetch categories");
     }
-    return response.json();
+    const data = await response.json();
+    return data.data; 
   }
 );
+
 
 export const addCategory = createAsyncThunk(
   "categories/addCategory",
@@ -80,7 +82,7 @@ const categorySlice = createSlice({
   name: "categories",
   initialState: {
     list: [],
-    status: "idle", 
+    status: "idle",
     error: null,
   },
   reducers: {},

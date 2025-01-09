@@ -15,22 +15,42 @@ const ViewProduct = () => {
 
   const [editProduct, setEditProduct] = useState(null);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 10; // Display 10 products per page
+
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchProducts());
     }
   }, [dispatch, status]);
 
+  // Handle delete
   const handleDelete = (id) => {
     dispatch(deleteProduct(id));
   };
 
+  // Handle update
   const handleUpdate = (e) => {
     e.preventDefault();
     dispatch(
       updateProduct({ id: editProduct.productId, productData: editProduct })
     );
     setEditProduct(null);
+  };
+
+  // Pagination logic
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+  const totalPages = Math.ceil(products.length / productsPerPage);
+
+  // Handle page change
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -52,8 +72,8 @@ const ViewProduct = () => {
           </tr>
         </thead>
         <tbody>
-          {products.length > 0 ? (
-            products.map((product, ind) => (
+          {currentProducts.length > 0 ? (
+            currentProducts.map((product, ind) => (
               <tr
                 key={product.productId}
                 className="bg-white border border-gray-300"
@@ -158,6 +178,42 @@ const ViewProduct = () => {
           </div>
         </div>
       )}
+
+      {/* Pagination */}
+      <nav aria-label="Page navigation example" className="mt-6">
+        <ul className="flex items-center -space-x-px h-8 text-sm">
+          <li>
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              className="px-3 h-8 text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100"
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+          </li>
+          {[...Array(totalPages)].map((_, index) => (
+            <li key={index}>
+              <button
+                onClick={() => handlePageChange(index + 1)}
+                className={`px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 ${
+                  currentPage === index + 1 ? "bg-blue-50 text-blue-600" : ""
+                }`}
+              >
+                {index + 1}
+              </button>
+            </li>
+          ))}
+          <li>
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              className="px-3 h-8 text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100"
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 };

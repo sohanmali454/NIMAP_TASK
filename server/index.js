@@ -2,10 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import { sequelize } from "./config/db.js";
-import categoryRoutes from "./routes/categoryRoutes.js";
-import productRoutes from "./routes/productRoutes.js";
-import Category from "./models/categoryModel.js";
-import Product from "./models/productModel.js";
+import categoryRoutes from "./app/category/routes/categoryRoutes.js";
+import productRoutes from "./app/product/routes/productRoutes.js";
+import Category from "./app/category/models/categoryModel.js";
+import Product from "./app/product/models/productModel.js";
 
 dotenv.config();
 
